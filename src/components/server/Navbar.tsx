@@ -5,27 +5,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { authOptions } from '@app/api/auth/[...nextauth]/route';
 
 import ShoppingCartButton from '@components/client/ShoppingCartButton';
 import UserMenuButton from '@components/client/UserMenuButton';
 
 import { getCart } from '@lib/db/cart';
+import { authOptions } from '@lib/constants/authOptions';
 
 export default async function Navbar() {
 	const session = await getServerSession(authOptions);
 	const cart = await getCart();
-
+	
 	async function searchProducts(formData: FormData) {
 		'use server';
-
+		
 		const searchQuery = formData.get('searchQuery')?.toString();
-
+		
 		if (searchQuery) {
 			redirect(`/search?query=${searchQuery}`);
 		}
 	}
-
+	
 	return (
 		<div className="bg-base-100">
 			<div className="navbar m-auto max-w-7xl flex-col gap-2 sm:flex-row">

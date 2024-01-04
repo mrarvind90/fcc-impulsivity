@@ -1,54 +1,54 @@
 import { Metadata } from 'next';
-import { Session, getServerSession } from 'next-auth';
+import { getServerSession, Session } from 'next-auth';
 import { redirect } from 'next/navigation';
 
-import { authOptions } from '@app/api/auth/[...nextauth]/route';
 
 import FormSubmitButton from '@components/client/FormSubmitButton';
 
 import { prisma } from '@lib/db/prisma';
+import { authOptions } from '@lib/constants/authOptions';
 
 export const metadata: Metadata = {
-	title: 'Add Product - Impulsivity',
+	title: 'Add Product - Impulsivity'
 };
 
 export default async function AddProductPage() {
 	const session = await getServerSession(authOptions);
-
+	
 	if (!session) {
 		redirect('/api/auth/signin?callbackUrl=/add-product');
 	}
-
+	
 	async function addProduct(formData: FormData) {
 		'use server';
-
+		
 		const session: Session | null = await getServerSession(authOptions);
-
+		
 		if (!session) {
 			redirect('/api/auth/signin?callbackUrl=/add-product');
 		}
-
+		
 		const name: string | undefined = formData.get('name')?.toString();
 		const description: string | undefined = formData.get('description')?.toString();
 		const imageUrl: string | undefined = formData.get('imageUrl')?.toString();
 		const price: number = Number(formData.get('price') || 0);
-
+		
 		if (!name || !description || !imageUrl || !price) {
 			throw Error('Missing required fields!');
 		}
-
+		
 		await prisma.product.create({
 			data: {
 				name,
 				description,
 				imageUrl,
-				price,
-			},
+				price
+			}
 		});
-
+		
 		redirect('/');
 	}
-
+	
 	return (
 		<div>
 			<h1 className="mb-3 text-lg font-bold">Add Product</h1>
