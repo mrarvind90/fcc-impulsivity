@@ -1,0 +1,13 @@
+/node_modules
+/prisma
+@types
+/src/assets
+README.md
+LICENSE
+package.json
+package-lock.json
+.env
+.env.sample
+.gitignore
+.eslintrc.json
+.prettierignore
