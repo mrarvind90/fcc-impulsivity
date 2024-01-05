@@ -67,7 +67,7 @@ practice helps maintain organization and clarity in your project.
 
 1. Clone the repo:
    ```git
-   git clone git@github.com:mrarvind90/fcc-ticketing-app.git
+   git clone git@github.com:mrarvind90/fcc-impulsivity.git
    ```
 2. Navigate to the repository:
     ```shell
